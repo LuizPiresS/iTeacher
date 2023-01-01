@@ -18,18 +18,18 @@ Para isso o mesmo deve enviar uma foto de sua carteira de identidade e uma foto 
 
 
 - [ ] Usuario
-    - [ ] Pode se registar
-      - [ ] Nome
-      - [ ] Email (login)
-      - [ ] Senha
-      - [ ] Telefone (opcional)
-      - [ ] Data de nascimento (opcional)
-      - [ ] Foto (opcional)
-      - [ ] Endereço (opcional)
-      - [ ] Cidade (opcional)
-      - [ ] Estado (opcional)
-      - [ ] País (opcional)
-      - [ ] CEP (opcional)
+    - [x] Pode se registar
+      - [x] Nome
+      - [x] Email (login)
+      - [x] Senha
+      - [x] Telefone (opcional)
+      - [x] Data de nascimento (opcional)
+      - [x] Foto (opcional)
+      - [x] Endereço (opcional)
+      - [x] Cidade (opcional)
+      - [x] Estado (opcional)
+      - [x] País (opcional)
+      - [x] CEP (opcional)
       - [ ] status (Aluno)
     -[ ] Pode se logar
     -[ ] Pode se deslogar

@@ -1,17 +1,30 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { UsersModule } from './users/users.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
+    DatabaseModule,
+    UsersModule,
+
+    MailerModule.forRoot({
+      transport: {
+        logger: true,
+        debug: true,
+        host: 'smtp.sendgrid.net',
+        auth: {
+          user: 'apikey',
+          pass: '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',
+        },
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    DatabaseModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
