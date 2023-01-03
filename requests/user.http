@@ -1,0 +1,11 @@
+## CREATE NEW USER
+POST localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "luizjesuz.p@gmail.com",
+  "password": "R@nd0mP@ssw0rd13",
+  "confirmPassword": "R@nd0mP@ssw0rd13"
+}
