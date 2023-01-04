@@ -1,73 +1,48 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# **iTeacher - O Conhecimento inclui**
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![O Conhecimento inclui](./docs/assets/logogg.png)
 
-## Description
+>Caso de estudo - Plataforma multilateral que conecta alunos e professores.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* Nossos Objetivos:
 
-## Installation
+    * Primeiro objetivo
 
-```bash
-$ npm install
-```
+      Desenvolver uma plataforma multilateral que conecta alunos e professores.
 
-## Running the app
+    * Segundo objetivo
 
-```bash
-# development
-$ npm run start
+      Desenvolver um curso **gratuito** entender as funcionalidades assim como desenvolver novos recursos para a plataforma
 
-# watch mode
-$ npm run start:dev
+* Nossa missão
 
-# production mode
-$ npm run start:prod
-```
+    * Fomentar o empreendedorismo, em áreas de risco social (com a plataforma) e compartilhar conhecimento e tecnologia (curso) para pessoas em risco social que queiram empreender com tecnologia
 
-## Test
+---
+> ### Instalação
 
-```bash
-# unit tests
-$ npm run test
+* clonar o o repositório
+    * git clone git@github.com:LuizPiresS/ITeacher.git
+    * npm install
 
-# e2e tests
-$ npm run test:e2e
+> ### Modelo de negócios
 
-# test coverage
-$ npm run test:cov
-```
+* [Modelo de negócios proposto](https://miro.com/app/board/o9J_kqWCpbw=/)
 
-## Support
+> ### Arquiteturas/designs utilizados
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+* Microsserviços
 
-## Stay in touch
+> ### Bibliotecas e ferramentas utilizadas
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+* [devcontainer](https://code.visualstudio.com/docs/remote/containers)
+* [Husky](https://github.com/typicode/husky)
+* [Lint-staged](https://github.com/okonet/lint-staged)
+* [Github Actions](https://github.com/features/actions)
+* [Docker](https://www.docker.com/)
+* [NestJS](https://nestjs.com/)
+* [Jest](https://jestjs.io/)
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+>### Features
