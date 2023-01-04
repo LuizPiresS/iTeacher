@@ -6,6 +6,7 @@ import {
 } from './database/repository/users.repository';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
+import { EmailAlreadyInUseError } from '../common/errors/types/email-already-in-use-error';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
   public async create(data: CreateUserDto): Promise<CreateUserResponse> {
     const user = await this.usersRepository.findUserByEmail(data.email);
     if (user) {
-      throw new HttpException('This email is already in use', 400);
+      throw new EmailAlreadyInUseError('This email is already in use');
     }
 
     const hashedPassword = await this.hashPassword(data.password);
