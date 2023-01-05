@@ -26,6 +26,7 @@
 * clonar o o repositório
     * git clone git@github.com:LuizPiresS/ITeacher.git
     * npm install
+    * docker-compose up -d
 
 > ### Modelo de negócios
 
