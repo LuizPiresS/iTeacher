@@ -1,12 +1,10 @@
-import { HttpException, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dtos/dto';
-import {
-  CreateUserResponse,
-  UsersRepository,
-} from './database/repository/users.repository';
+import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { EmailAlreadyInUseError } from '../common/errors/types/email-already-in-use-error';
+import { UsersRepository } from './repositories/users.repository';
+import { UsersEntity } from './entities/users.entity';
 
 @Injectable()
 export class UsersService {
@@ -15,14 +13,14 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
-  public async create(data: CreateUserDto): Promise<CreateUserResponse> {
+  public async create(data: CreateUserDto): Promise<UsersEntity> {
     const user = await this.usersRepository.findUserByEmail(data.email);
     if (user) {
       throw new EmailAlreadyInUseError('This email is already in use');
     }
 
     const hashedPassword = await this.hashPassword(data.password);
-    const newUser = await this.usersRepository.createNewUser({
+    const newUser = await this.usersRepository.create({
       ...data,
       password: hashedPassword,
     });
@@ -30,9 +28,8 @@ export class UsersService {
     await this.sendEmail(
       newUser.email,
       'iTecher - Vefiricação de conta',
-      'Seu código de verificação é: 123456',
+      'Seu código de verificação é: 123456', // TODO: criar gerador de código de verificação
     );
-    console.log('newUser', newUser);
     return newUser;
   }
 
