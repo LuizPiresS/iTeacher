@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { EmailAlreadyInUseErrorInterceptor } from './common/errors/interceptors/email-already-in-use-error.interceptor';
 import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConflictErrorInterceptor } from './common/errors/interceptors/conflict-error.interceptor';
+import { DatabaseInterceptor } from './common/errors/interceptors/database.interceptor';
 
 dotenv.config();
 async function bootstrap() {
@@ -23,7 +24,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   // Global interceptors
-  app.useGlobalInterceptors(new EmailAlreadyInUseErrorInterceptor());
+  app.useGlobalInterceptors(new ConflictErrorInterceptor());
+  app.useGlobalInterceptors(new DatabaseInterceptor());
 
   // init server
   await app.listen(+process.env.APP_PORT);

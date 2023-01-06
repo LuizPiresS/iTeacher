@@ -1,20 +1,20 @@
 import {
   CallHandler,
+  ConflictException,
   ExecutionContext,
-  HttpException,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
-import { EmailAlreadyInUseError } from '../types/email-already-in-use-error';
+import { ConflictError } from '../types/conflict-error';
 
 @Injectable()
-export class EmailAlreadyInUseErrorInterceptor implements NestInterceptor {
+export class ConflictErrorInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       catchError((error) => {
-        if (error instanceof EmailAlreadyInUseError) {
-          throw new HttpException(error.message, 400);
+        if (error instanceof ConflictError) {
+          throw new ConflictException(error.message);
         } else {
           throw error;
         }
