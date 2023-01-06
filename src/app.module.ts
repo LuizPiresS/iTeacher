@@ -3,7 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { AuthModule } from './auth/auth.module';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 @Module({
   imports: [
     UsersModule,
@@ -12,10 +14,10 @@ import { AuthModule } from './auth/auth.module';
       transport: {
         logger: true,
         debug: true,
-        host: 'smtp.sendgrid.net',
+        host: process.env.SMTP_HOST,
         auth: {
-          user: 'apikey',
-          pass: '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',
+          user: process.env.SMTP_USERNAME,
+          pass: process.env.SMTP_PASSWORD,
         },
       },
     }),
