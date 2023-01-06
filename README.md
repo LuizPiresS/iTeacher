@@ -4,7 +4,7 @@
 
 ![O Conhecimento inclui](./docs/assets/logogg.png)
 
->Caso de estudo - Plataforma multilateral que conecta alunos e professores.
+>Plataforma multilateral para professores.
 
 * Nossa missão
 
