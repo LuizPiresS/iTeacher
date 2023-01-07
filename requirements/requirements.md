@@ -34,7 +34,7 @@ Para isso o mesmo deve enviar uma foto de sua carteira de identidade e uma foto 
     -[x] Pode se logar
     -[x] Pode se deslogar
     -[x] Pode ver seu perfil
-    -[ ] Pode editar seu perfil
+    -[x] Pode editar seu perfil
     -[ ] Pode resetar sua senha
     -[ ] Pode deletar sua conta
     -[ ] Pode requisitar a mudança de seu perfil para "Professor" ou "Professor verificado"
