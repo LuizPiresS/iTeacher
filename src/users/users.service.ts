@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UsersRepository } from './repositories/users.repository';
 import { UsersEntity } from './entities/users.entity';
+import { ProfileDto } from './dto/profile.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,6 +26,10 @@ export class UsersService {
       'Seu código de verificação é: 123456', // TODO: criar gerador de código de verificação
     );
     return newUser;
+  }
+
+  public async getProfile(id: ProfileDto): Promise<UsersEntity> {
+    return this.usersRepository.findUserById(id.id);
   }
 
   private async hashPassword(password: string) {

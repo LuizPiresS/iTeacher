@@ -32,8 +32,8 @@ Para isso o mesmo deve enviar uma foto de sua carteira de identidade e uma foto 
       - [x] CEP (opcional)
       - [ ] status (Aluno)
     -[x] Pode se logar
-    -[ ] Pode se deslogar
-    -[ ] Pode ver seu perfil
+    -[x] Pode se deslogar
+    -[x] Pode ver seu perfil
     -[ ] Pode editar seu perfil
     -[ ] Pode resetar sua senha
     -[ ] Pode deletar sua conta

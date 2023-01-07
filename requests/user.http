@@ -8,3 +8,8 @@ Content-Type: application/json
   "email": "random@random.com",
   "password": "R@nd0mP@ssw0rd13"
 }
+
+
+### GET PROFILE
+GET http://localhost:3000/users/
+Accept: application/json
