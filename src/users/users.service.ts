@@ -4,7 +4,8 @@ import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UsersRepository } from './repositories/users.repository';
 import { UsersEntity } from './entities/users.entity';
-import { ProfileDto } from './dto/profile.dto';
+import { listProfileDto } from './dto/list-profile.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -28,8 +29,12 @@ export class UsersService {
     return newUser;
   }
 
-  public async getProfile(id: ProfileDto): Promise<UsersEntity> {
+  public async getProfile(id: listProfileDto): Promise<UsersEntity> {
     return this.usersRepository.findUserById(id.id);
+  }
+
+  public async update(data: UpdateUserDto): Promise<UsersEntity> {
+    return this.usersRepository.update(data);
   }
 
   private async hashPassword(password: string) {

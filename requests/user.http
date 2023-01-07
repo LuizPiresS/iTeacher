@@ -9,7 +9,6 @@ Content-Type: application/json
   "password": "R@nd0mP@ssw0rd13"
 }
 
-
 ### GET PROFILE
 GET http://localhost:3000/users/
 Accept: application/json
