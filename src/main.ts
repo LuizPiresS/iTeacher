@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConflictErrorInterceptor } from './common/errors/interceptors/conflict-error.interceptor';
 import { DatabaseInterceptor } from './common/errors/interceptors/database.interceptor';
+import { UserNotFoundErrorInterceptor } from './common/errors/interceptors/unauthorized-error.interceptor';
 
 dotenv.config();
 async function bootstrap() {
@@ -26,6 +27,7 @@ async function bootstrap() {
   // Global interceptors
   app.useGlobalInterceptors(new ConflictErrorInterceptor());
   app.useGlobalInterceptors(new DatabaseInterceptor());
+  app.useGlobalInterceptors(new UserNotFoundErrorInterceptor());
 
   // init server
   await app.listen(+process.env.APP_PORT);
