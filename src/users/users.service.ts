@@ -34,7 +34,8 @@ export class UsersService {
   }
 
   public async update(data: UpdateUserDto): Promise<UsersEntity> {
-    return this.usersRepository.update(data);
+    const hashedPassword = await this.hashPassword(data.password);
+    return this.usersRepository.update({ ...data, password: hashedPassword });
   }
 
   private async hashPassword(password: string) {
