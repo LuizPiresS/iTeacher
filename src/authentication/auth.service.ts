@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthUserDto } from './dtos/dto';
+import { AuthUserDto } from './dtos/auth-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserNotFoundError } from '../common/errors/types/user-not-found-error';
 import { UnauthorizedError } from '../common/errors/types/unauthorized-error';
