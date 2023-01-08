@@ -6,6 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto {
   @IsString()
@@ -13,19 +14,23 @@ export class UpdateUserDto {
   @IsNotEmpty()
   id: string;
 
+  @ApiProperty({ example: 'randon2@randon.com' })
   @IsString()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @ApiProperty({ example: 'R@nd0mP@ssw0rd' })
   @IsString()
   @IsNotEmpty()
   password: string;
 
+  @ApiProperty({ example: 'Random' })
   @IsString()
   @IsNotEmpty()
   firstName: string;
 
+  @ApiProperty({ example: 'Random' })
   @IsString()
   @IsNotEmpty()
   lastName: string;
