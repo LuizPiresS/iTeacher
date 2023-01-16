@@ -59,7 +59,6 @@ describe('UsersService', () => {
   describe('#update', () => {
     it('should update user', async () => {
       const data: UpdateUserDto = {
-        id: 'uuidv4',
         email: 'random@random.com',
         password: 'R@nd0m',
         firstName: 'Random',
@@ -91,7 +90,7 @@ describe('UsersService', () => {
 
       const usersService = new UsersService(usersRepository, mailerService);
 
-      const user = await usersService.getProfile({ id: 'uuidv4' });
+      const user = await usersService.profile({ id: 'uuidv4' });
 
       expect(user).toEqual({});
       expect(mockedFindUserById).toHaveBeenCalledTimes(1);

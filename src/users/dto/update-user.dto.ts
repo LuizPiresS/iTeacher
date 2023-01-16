@@ -4,16 +4,11 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  IsUUID,
+  IsStrongPassword,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto {
-  @IsString()
-  @IsUUID(4)
-  @IsNotEmpty()
-  id: string;
-
   @ApiProperty({ example: 'randon2@randon.com' })
   @IsString()
   @IsNotEmpty()
@@ -23,6 +18,7 @@ export class UpdateUserDto {
   @ApiProperty({ example: 'R@nd0mP@ssw0rd' })
   @IsString()
   @IsNotEmpty()
+  @IsStrongPassword()
   password: string;
 
   @ApiProperty({ example: 'Random' })
@@ -35,6 +31,7 @@ export class UpdateUserDto {
   @IsNotEmpty()
   lastName: string;
 
+  @ApiProperty({ example: '53123456789' })
   @IsString()
   @IsPhoneNumber('BR')
   @IsOptional()

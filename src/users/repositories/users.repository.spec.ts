@@ -49,7 +49,7 @@ describe('UsersRepository', () => {
 
       const usersRepository = new UsersRepository(prismaService);
 
-      const result = await usersRepository.update(mockedData);
+      const result = await usersRepository.update(mockedData, 'UUIDV4');
 
       expect(result).toEqual({});
       expect(mockedPrismaUpdate).toHaveBeenCalledTimes(1);

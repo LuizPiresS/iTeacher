@@ -4,8 +4,9 @@ import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UsersRepository } from './repositories/users.repository';
 import { UsersEntity } from './entities/users.entity';
-import { listProfileDto } from './dto/list-profile.dto';
+import { IdDto } from './dto/id.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUser, Profile, UpdateUser } from './types/users';
 
 @Injectable()
 export class UsersService {
@@ -14,28 +15,34 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
-  public async create(data: CreateUserDto): Promise<UsersEntity> {
+  public async create(data: CreateUserDto): Promise<CreateUser> {
     const hashedPassword = await this.hashPassword(data.password);
-    const newUser = await this.usersRepository.create({
+    const user = await this.usersRepository.create({
       ...data,
       password: hashedPassword,
     });
 
     await this.sendEmail(
-      newUser.email,
+      user.email,
       'iTecher - Vefiricação de conta',
       'Seu código de verificação é: 123456', // TODO: criar gerador de código de verificação
     );
-    return newUser;
+    return this.usersEntityToCreateUser(user);
   }
 
-  public async getProfile(id: listProfileDto): Promise<UsersEntity> {
-    return this.usersRepository.findUserById(id.id);
+  public async profile(id: IdDto): Promise<Profile> {
+    const data = await this.usersRepository.findUserById(id.id);
+    return this.usersEntityToProfile(data);
   }
 
-  public async update(data: UpdateUserDto): Promise<UsersEntity> {
+  public async update(data: UpdateUserDto, id: string): Promise<UpdateUser> {
     const hashedPassword = await this.hashPassword(data.password);
-    return this.usersRepository.update({ ...data, password: hashedPassword });
+
+    const result = await this.usersRepository.update(
+      { ...data, password: hashedPassword },
+      id,
+    );
+    return this.usersEntityToUpdateUser(result);
   }
 
   private async hashPassword(password: string) {
@@ -54,5 +61,46 @@ export class UsersService {
     });
 
     return response;
+  }
+
+  private usersEntityToCreateUser(data: UsersEntity): CreateUser {
+    return {
+      id: data.id,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    };
+  }
+
+  private usersEntityToProfile(data: UsersEntity): Profile {
+    return {
+      addressCity: data.addressCity,
+      addressCountry: data.addressCountry,
+      addressState: data.addressState,
+      addressStreet: data.addressStreet,
+      addressZip: data.addressZip,
+      dateOfBirth: data.dateOfBirth,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      photoUrl: data.photoUrl,
+    };
+  }
+
+  private usersEntityToUpdateUser(data: UsersEntity): UpdateUser {
+    return {
+      addressCity: data.addressCity,
+      addressCountry: data.addressCountry,
+      addressState: data.addressState,
+      addressStreet: data.addressStreet,
+      addressZip: data.addressZip,
+      dateOfBirth: data.dateOfBirth,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      photoUrl: data.photoUrl,
+    };
   }
 }
