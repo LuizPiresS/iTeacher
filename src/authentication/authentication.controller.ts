@@ -9,9 +9,7 @@ export class AuthController {
 
   @ApiTags('Auth')
   @Post('/auth/login')
-  public async login(
-    @Body() data: AuthUserDto,
-  ): Promise<{ accessToken: string }> {
+  public async login(@Body() data: AuthUserDto): Promise<any> {
     return await this.authService.validateUser(data);
   }
 }
