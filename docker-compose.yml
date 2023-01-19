@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   app:
@@ -6,10 +6,11 @@ services:
     entrypoint: .docker/entrypoint.sh
     container_name: iTeacher-app
     ports:
-      - "3000:3000"
-      - "5555:5555"
+      - '3000:3000'
+      - '5555:5555'
+      - '9229:9229'
     volumes:
-        - .:/home/node/app
+      - .:/home/node/app
     depends_on:
       - db
 
@@ -19,7 +20,7 @@ services:
     restart: always
     tty: true
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - .docker/postgres/data:/var/lib/postgresql/data
     environment:
@@ -32,10 +33,9 @@ services:
     container_name: iTeacher-pgadmin
     restart: always
     ports:
-      - "5050:80"
+      - '5050:80'
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
       - db
-
