@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { AuthUserDto } from './dtos/auth-user.dto';
+import { Body, Injectable } from '@nestjs/common';
+import { AuthUserDto } from './dtos/authentication-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserNotFoundError } from '../common/errors/types/user-not-found-error';
 import { UnauthorizedError } from '../common/errors/types/unauthorized-error';
@@ -16,21 +16,19 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async validateUser(
-    data: AuthUserDto,
-  ): Promise<{ accessToken: string }> {
+  public async validateUser(data: AuthUserDto): Promise<UsersEntity> {
     const user = await this.usersRepository.findUserByEmail(data.email);
-
-    if (!user) {
-      throw new UserNotFoundError('User not found');
-    }
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (isPasswordValid) {
-      return await this.tokenGenerator(user);
+      return user;
     }
 
     throw new UnauthorizedError('Unauthorized user');
   }
+
+  // public async login(
+  //   @Body() data: AuthUserDto,
+  // ): Promise<{ accessToken: string }> {}
 
   private async tokenGenerator(
     user: UsersEntity,
