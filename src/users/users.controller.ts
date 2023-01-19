@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
-import { UsersEntity } from './entities/users.entity';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { listProfileDto } from './dto/list-profile.dto';
+import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('Users')
@@ -24,6 +22,7 @@ export class UsersController {
     return this.usersService.create(data);
   }
 
+  @ApiHeader({ name: 'authorization' })
   @ApiResponse({
     status: 200,
     description: 'Return profile data',
