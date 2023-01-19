@@ -1,10 +1,10 @@
+import { IsActiveError } from '../common/errors/types/is-active.error';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UsersRepository } from './repositories/users.repository';
 import { UsersEntity } from './entities/users.entity';
-import { IdDto } from './dto/id.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUser, Profile, UpdateUser } from './types/users';
 
@@ -30,8 +30,11 @@ export class UsersService {
     return this.usersEntityToCreateUser(user);
   }
 
-  public async profile(id: IdDto): Promise<Profile> {
-    const data = await this.usersRepository.findUserById(id.id);
+  public async profile(id: string): Promise<Profile> {
+    const data = await this.usersRepository.findUserById(id);
+    if (!data.isActive) {
+      throw new IsActiveError();
+    }
     return this.usersEntityToProfile(data);
   }
 

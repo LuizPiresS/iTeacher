@@ -1,10 +1,11 @@
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from './../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { UsersRepository } from './repositories/users.repository';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Test } from '@nestjs/testing';
 import { UsersService } from './users.service';
+import { IsActiveError } from '../common/errors/types/is-active.error';
 
 jest.mock('@nestjs-modules/mailer');
 describe('UsersService', () => {
@@ -85,12 +86,12 @@ describe('UsersService', () => {
       const mockedFindUserById = (usersRepository.findUserById = jest
         .fn()
         .mockImplementation(() => {
-          return {};
+          return { isActive: true };
         }));
 
       const usersService = new UsersService(usersRepository, mailerService);
 
-      const user = await usersService.profile({ id: 'uuidv4' });
+      const user = await usersService.profile('uuidv4');
 
       expect(user).toEqual({});
       expect(mockedFindUserById).toHaveBeenCalledTimes(1);
