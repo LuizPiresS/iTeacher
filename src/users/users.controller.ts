@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUser, Profile, UpdateUser } from './types/users';
 
 @ApiTags('Users')
 @Controller('users')
@@ -22,7 +31,7 @@ export class UsersController {
     description: 'User created',
   })
   @Post()
-  public async create(@Body() data: CreateUserDto): Promise<UsersEntity> {
+  public async create(@Body() data: CreateUserDto): Promise<CreateUser> {
     return this.usersService.create(data);
   }
 
@@ -36,8 +45,10 @@ export class UsersController {
     description: 'Bad Request - invalid id',
   })
   @Get('/profile/:id')
-  public async profile(@Param() id: listProfileDto): Promise<UsersEntity> {
-    return this.usersService.getProfile(id);
+  public async profile(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<Profile> {
+    return this.usersService.profile(id);
   }
 
   @ApiResponse({
@@ -48,8 +59,11 @@ export class UsersController {
     status: 400,
     description: 'Bad Request - invalid id',
   })
-  @Patch()
-  public async update(@Body() data: UpdateUserDto): Promise<UsersEntity> {
-    return this.usersService.update(data);
+  @Patch(':id')
+  public async update(
+    @Body() data: UpdateUserDto,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<UpdateUser> {
+    return this.usersService.update(data, id);
   }
 }
