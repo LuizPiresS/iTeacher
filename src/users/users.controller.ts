@@ -14,6 +14,10 @@ export class UsersController {
     description: 'Conflict - email already exists',
   })
   @ApiResponse({
+    status: 400,
+    description: 'Bad Request - unfilled fields',
+  })
+  @ApiResponse({
     status: 201,
     description: 'User created',
   })
