@@ -1,7 +1,6 @@
-import { Body, Injectable } from '@nestjs/common';
-import { AuthUserDto } from './dtos/authentication-user.dto';
+import { Injectable } from '@nestjs/common';
+import { AuthenticationDto } from './dtos/authentication.dto';
 import * as bcrypt from 'bcrypt';
-import { UserNotFoundError } from '../common/errors/types/user-not-found-error';
 import { UnauthorizedError } from '../common/errors/types/unauthorized-error';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from '../users/repositories/users.repository';
@@ -16,7 +15,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async validateUser(data: AuthUserDto): Promise<UsersEntity> {
+  public async validateUser(data: AuthenticationDto): Promise<UsersEntity> {
     const user = await this.usersRepository.findUserByEmail(data.email);
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (isPasswordValid) {
