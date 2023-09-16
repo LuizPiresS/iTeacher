@@ -11,7 +11,7 @@ npm run doc
  > [Lean Architecture](./docs/concepts/lean-architecture.md)
 
  ## Design Pattern
- > [DTOs](./docs/concepts/dtos.md)
+ > [DTOs](./docs/concepts/dtos-pattern.md)
 
  > [Service Pattern](./docs/concepts/service-pattern.md)
 
@@ -41,7 +41,7 @@ docker compose down && docker compose up -d
 
 >[Novo Controller](./docs/how-to-make/new-controller.md) 
 
->[Novo Erro](./docs/how-to-make/new-service.md)
+>[Novo Erro](./docs/how-to-make/new-error.md)
 
 >[Novo Service](./docs/how-to-make/new-service.md)
 
