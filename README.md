@@ -1,73 +1,54 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# iTeacher
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## DOCUMENTAÇÃO
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
+### Gerar documentação
 ```bash
-$ npm install
+npm run doc
+```
+## Arquitetura
+
+ > [Lean Architecture](./docs/concepts/lean-architecture.md)
+
+ ## Design Pattern
+ > [DTOs](./docs/concepts/dtos.md)
+
+ > [Service Pattern](./docs/concepts/service-pattern.md)
+
+ > [Repository Pattern](./docs/concepts/repository-pattern.md)
+
+
+## Principles
+> [Single Responsibility Principle](./docs/concepts/single-responsibility-principle.md)
+
+>[Dependency Inversion Principle](./docs/concepts/dependency-inversion-principle.md) 
+
+## Ambiente de desenvolvimento
+
+> Renomear arquivo .env.example para .env
+
+> Subir dockers 
+```bash
+docker compose down && docker compose up -d
 ```
 
-## Running the app
+## NOVA FEATURE
+>[Nova variável de ambiente](./docs/how-to-make/environment-variables.md) 
 
-```bash
-# development
-$ npm run start
+>[Novo módulo](./docs/how-to-make/new-module.md)
 
-# watch mode
-$ npm run start:dev
+>[Novo DTO](./docs/how-to-make/new-dto.md)
 
-# production mode
-$ npm run start:prod
-```
+>[Novo Controller](./docs/how-to-make/new-controller.md) 
 
-## Test
+>[Novo Erro](./docs/how-to-make/new-service.md)
 
-```bash
-# unit tests
-$ npm run test
+>[Novo Service](./docs/how-to-make/new-service.md)
 
-# e2e tests
-$ npm run test:e2e
+>[Novo Model](./docs/how-to-make/new-model.md)
 
-# test coverage
-$ npm run test:cov
-```
+>[Novo Repository](./docs/how-to-make/new-repository.md) 
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
