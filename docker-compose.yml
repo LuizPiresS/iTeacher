@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    entrypoint: .docker/entrypoint.sh
+    container_name: ${CONTAINER_NAME}-app
+    ports:
+      - '${APP_PORT}:3000'
+      - '5555:5555'
+      - '9229:9229'
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
+      - redis
+
+  db:
+    build: .docker/postgres
+    container_name: ${CONTAINER_NAME}-db
+    restart: always
+    tty: true
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - .docker/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+
+  redis:
+    container_name: ${CONTAINER_NAME}-redis
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - .:/home/node/app
