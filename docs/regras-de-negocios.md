@@ -21,18 +21,52 @@ Regras de negócios
 
 > **Eu como aluno preciso me cadastrar na plataforma**
 
+>Payload
+
 ```JSON
 {
-  "name": "Random Name",
-  "email": "random@random.com",
-  "password": "P4$sword",
-  "confirmPassword": "P4$sword",
-  "cellPhone": "(99)999999999"
-  "address": {
-    "street": "Random Street Name",
-    "number": "123",
-    "neighborhood": "Random Neighborhood Name"
+    "id": "randomId",
+    "name": "Random Name",
+    "email": "random@random.com",
+    "password": "P4$sword",
+    "confirmPassword": "P4$sword",
+    "cellPhone": "(99)999999999"
+    "address": {
+      "street": "Random Street Name",
+      "number": "123",
+      "neighborhood": "Random Neighborhood Name"
+}
+```
+
+> Retorno de sucesso
+
+```JSON
+{
+  "status": "success",
+  "data": {
+    "id": "randomId",
+    "name": "Random Name",
+    "email": "random@random.com",
+    "password": "P4$sword",
+    "confirmPassword": "P4$sword",
+    "cellPhone": "(99)999999999"
+    "address": {
+      "street": "Random Street Name",
+      "number": "123",
+      "neighborhood": "Random Neighborhood Name"
+    },
   },
+  "message": "new user successfully registered"
+}
+```
+
+>Retorno de erro
+
+```JSON
+{
+  "status": "error",
+  "data": null,
+  "message": "Usuário não encontrado."
 }
 ```
 
