@@ -1,8 +1,8 @@
 import { UserAlreadyExistsError } from '../types/user-already-existis.error';
 import {
   CallHandler,
+  ConflictException,
   ExecutionContext,
-  HttpException,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
@@ -14,7 +14,7 @@ export class UserAlreadyExistsInterceptor implements NestInterceptor {
     return next.handle().pipe(
       catchError((error) => {
         if (error instanceof UserAlreadyExistsError) {
-          throw new HttpException('User not found', 404);
+          throw new ConflictException('User already exists');
         } else {
           throw error;
         }
