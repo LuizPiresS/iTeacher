@@ -7,11 +7,15 @@ import { UserAlreadyExistsInterceptor } from './common/errors/interceptors/user-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // CORS
+  app.enableCors({ origin: '*' });
+
   // Pipes
   app.useGlobalPipes(new ValidationPipe());
 
   // Interceptors
   app.useGlobalInterceptors(new UserAlreadyExistsInterceptor());
+
   // Swagger configuration
   const config = new DocumentBuilder()
     .setTitle(process.env.SWAGGER_TITLE)
