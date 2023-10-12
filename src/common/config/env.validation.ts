@@ -16,8 +16,9 @@ class EnvironmentVariables {
   @IsNumber()
   APP_PORT: number;
 
-  // BCRYPT
-  SALTS: number;
+  // BCRYPT CONFIGURATION
+  @IsNumber()
+  SALT_ROUNDS: number;
 }
 
 export function validate(config: Record<string, unknown>) {
