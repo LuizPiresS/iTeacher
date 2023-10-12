@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IHashingService } from './interfaces/hashing.service..interface';
+import { IHashingService } from './interfaces/hashing.service.interface';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class HashingService implements IHashingService {
