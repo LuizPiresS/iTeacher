@@ -4,6 +4,9 @@ import { PrismaClient } from '@prisma/client';
 import { HashingModule } from './common/hashing/hashing.module';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './common/config/env.validation';
+import AppConfig from './common/config/app.config';
+import MailConfig from './common/config/mail.config';
+import SwaggerConfig from './common/config/swagger.config';
 
 @Module({
   imports: [
@@ -12,6 +15,7 @@ import { validate } from './common/config/env.validation';
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
+      load: [AppConfig, MailConfig, SwaggerConfig],
     }),
   ],
   controllers: [],

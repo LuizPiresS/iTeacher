@@ -3,9 +3,12 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { UserAlreadyExistsInterceptor } from './common/errors/interceptors/user-already-existis.interceptor';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const configService = app.get(ConfigService);
 
   // CORS
   app.enableCors({ origin: '*' });
@@ -18,8 +21,8 @@ async function bootstrap() {
 
   // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle(process.env.SWAGGER_TITLE)
-    .setDescription(process.env.SWAGGER_DESCRIPTION)
+    .setTitle(configService.get<string>('swaggerTitle'))
+    .setDescription(configService.get<string>('swaggerDescription'))
     .setVersion(process.env.npm_package_version)
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
@@ -29,6 +32,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  await app.listen(configService.get<number>('app.port'));
 }
-bootstrap();
+void bootstrap();
