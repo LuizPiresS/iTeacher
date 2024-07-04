@@ -1,5 +1,5 @@
+import { Injectable, Inject } from '@nestjs/common';
 import { IUsersRepository } from '../interfaces/users.repository.interface';
-import { Inject, Injectable } from '@nestjs/common';
 import { IHashingService } from '../../../../common/hashing/domain/services/interfaces/hashing.service.interface';
 import { ConfigService } from '@nestjs/config';
 import { IValidatorService } from '../interfaces/validator.service.interface';
@@ -40,10 +40,34 @@ export class UsersService {
     );
 
     const newUser = await this.usersRepository.create({
-      ...input,
+      email: input.email,
       password: hashedPassword,
     });
 
     return this.userMapperService.toOutput(newUser);
+  }
+
+  public async updateUser(
+    userId: string,
+    input: UserInputDTO,
+  ): Promise<UserOutputDTO> {
+    this.validatorService.validateUserInput(input);
+
+    const existentUser = await this.usersRepository.findByEmail(input.email);
+    if (existentUser && existentUser.id !== userId) {
+      throw new UserAlreadyExistsError();
+    }
+
+    const hashedPassword = await this.hashService.hashingPassword(
+      input.password,
+      this.configService.get<number>('SALT_ROUNDS'),
+    );
+
+    const updatedUser = await this.usersRepository.update(userId, {
+      email: input.email,
+      password: hashedPassword,
+    });
+
+    return this.userMapperService.toOutput(updatedUser);
   }
 }
