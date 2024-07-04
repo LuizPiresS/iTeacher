@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsStrongPassword } from 'class-validator';
+import { Match } from '../decorators/match.decorator';
 
 export class UserInputDTO {
   @ApiProperty({
@@ -16,4 +17,12 @@ export class UserInputDTO {
   })
   @IsStrongPassword()
   password: string;
+
+  @ApiProperty({
+    description: 'Confirmation of the password',
+    example: 'R@nd0mP@ssw0rd',
+  })
+  @IsStrongPassword()
+  @Match('password', { message: 'Passwords do not match' })
+  confirmPassword: string;
 }
