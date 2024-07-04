@@ -1,0 +1,11 @@
+### Criar Usuário
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "P4$sword",
+  "confirmPassword": "P4$sword"
+}
+
+###
