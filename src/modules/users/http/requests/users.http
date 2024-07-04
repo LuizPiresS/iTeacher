@@ -8,4 +8,15 @@ Content-Type: application/json
   "confirmPassword": "P4$sword"
 }
 
-###
+### Atualizar Usuário
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "email": "updated@example.com",
+  "password": "NewP4$sword",
+  "confirmPassword": "NewP4$sword"
+}
+
+### Anonimizar Usuário
+DELETE http://localhost:3000/users/1

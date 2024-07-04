@@ -7,6 +7,7 @@ import { IUserMapperService } from '../interfaces/user-mapper.service.interface'
 import { UserInputDTO } from '../../http/dtos/user.input.dto';
 import { UserOutputDTO } from '../../http/dtos/user.output.dto';
 import { UserAlreadyExistsError } from '../../../../common/errors/types/user-already-existis.error';
+import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
 
 @Injectable()
 export class UsersService {
@@ -34,9 +35,14 @@ export class UsersService {
       throw new UserAlreadyExistsError();
     }
 
+    const saltRounds = this.configService.get<number>('SALT_ROUNDS');
+    if (!saltRounds) {
+      throw new Error('SALT_ROUNDS is not defined');
+    }
+
     const hashedPassword = await this.hashService.hashingPassword(
       input.password,
-      this.configService.get<number>('SALT_ROUNDS'),
+      saltRounds,
     );
 
     const newUser = await this.usersRepository.create({
@@ -51,6 +57,11 @@ export class UsersService {
     userId: string,
     input: UserInputDTO,
   ): Promise<UserOutputDTO> {
+    const user = await this.usersRepository.findById(userId);
+    if (user.isDeleted) {
+      throw new UserDeletedException();
+    }
+
     this.validatorService.validateUserInput(input);
 
     const existentUser = await this.usersRepository.findByEmail(input.email);
@@ -69,5 +80,21 @@ export class UsersService {
     });
 
     return this.userMapperService.toOutput(updatedUser);
+  }
+
+  public async anonymizeUser(userId: string): Promise<void> {
+    const user = await this.usersRepository.findById(userId);
+    if (user.isDeleted) {
+      throw new UserDeletedException();
+    }
+
+    const anonymizedData = {
+      email: `deleted_user_${userId}@example.com`,
+      password: '', // Optionally set to a hashed version of a known value
+      isDeleted: true,
+      // Other fields that need to be anonymized
+    };
+
+    await this.usersRepository.update(userId, anonymizedData);
   }
 }

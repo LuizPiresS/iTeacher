@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { UserAlreadyExistsInterceptor } from './common/errors/interceptors/user-already-existis.interceptor';
 import { ConfigService } from '@nestjs/config';
+import { UserDeletedFilter } from './common/errors/filters/user-deleted.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +19,8 @@ async function bootstrap() {
 
   // Interceptors
   app.useGlobalInterceptors(new UserAlreadyExistsInterceptor());
+
+  app.useGlobalFilters(new UserDeletedFilter());
 
   // Swagger configuration
   const config = new DocumentBuilder()
