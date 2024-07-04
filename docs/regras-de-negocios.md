@@ -25,16 +25,17 @@ Regras de negócios
 
 ```JSON
 {
-    "id": "randomId",
-    "name": "Random Name",
-    "email": "random@random.com",
-    "password": "P4$sword",
-    "confirmPassword": "P4$sword",
-    "cellPhone": "(99)999999999"
-    "address": {
-      "street": "Random Street Name",
-      "number": "123",
-      "neighborhood": "Random Neighborhood Name"
+  "id": "randomId",
+  "name": "Random Name",
+  "email": "random@random.com",
+  "password": "P4$sword",
+  "confirmPassword": "P4$sword",
+  "cellPhone": "(99)999999999"
+  "address": {
+    "street": "Random Street Name",
+    "number": "123",
+    "neighborhood": "Random Neighborhood Name"
+  }
 }
 ```
 
