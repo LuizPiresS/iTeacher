@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   app:
@@ -14,6 +14,8 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - app-network
 
   db:
     build: .docker/postgres
@@ -28,6 +30,8 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=${DB_NAME}
+    networks:
+      - app-network
 
   redis:
     container_name: ${CONTAINER_NAME}-redis
@@ -36,3 +40,9 @@ services:
       - '6379:6379'
     volumes:
       - .:/home/node/app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
