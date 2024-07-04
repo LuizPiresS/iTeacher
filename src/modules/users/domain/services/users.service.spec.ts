@@ -3,26 +3,26 @@ import { UsersService } from './users.service';
 import { ConfigService } from '@nestjs/config';
 import { UserAlreadyExistsError } from '../../../../common/errors/types/user-already-existis.error';
 import { UserInputDTO } from '../../http/dtos/user.input.dto';
-// import { UserOutputDTO } from '../../http/dtos/user.output.dto';
 
-export const usersRepositoryMock = {
+const usersRepositoryMock = {
   findByEmail: jest.fn(),
   create: jest.fn(),
+  update: jest.fn(),
 };
 
-export const hashServiceMock = {
+const hashServiceMock = {
   hashingPassword: jest.fn(),
 };
 
-export const configServiceMock = {
+const configServiceMock = {
   get: jest.fn(),
 };
 
-export const validatorServiceMock = {
+const validatorServiceMock = {
   validateUserInput: jest.fn(),
 };
 
-export const userMapperServiceMock = {
+const userMapperServiceMock = {
   toOutput: jest.fn(),
 };
 
@@ -74,6 +74,7 @@ describe('UsersService', () => {
       const input: UserInputDTO = {
         email: 'test@example.com',
         password: 'password123',
+        confirmPassword: 'password123',
       };
 
       await expect(service.createUser(input)).rejects.toThrow(
@@ -105,6 +106,7 @@ describe('UsersService', () => {
       const input: UserInputDTO = {
         email: 'test@example.com',
         password: 'password123',
+        confirmPassword: 'password123',
       };
 
       const result = await service.createUser(input);
@@ -126,6 +128,84 @@ describe('UsersService', () => {
         10,
       );
       expect(usersRepositoryMock.create).toHaveBeenCalledWith({
+        email: 'test@example.com',
+        password: 'hashedPassword',
+      });
+      expect(userMapperServiceMock.toOutput).toHaveBeenCalledWith({
+        id: '1',
+        email: 'test@example.com',
+        password: 'hashedPassword',
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      });
+    });
+  });
+
+  describe('updateUser', () => {
+    it('should throw UserAlreadyExistsError if email is already used by another user', async () => {
+      usersRepositoryMock.findByEmail.mockResolvedValueOnce({
+        id: '2',
+        email: 'test@example.com',
+        password: 'hashedPassword',
+      });
+
+      const input: UserInputDTO = {
+        email: 'test@example.com',
+        password: 'password123',
+        confirmPassword: 'password123',
+      };
+
+      await expect(service.updateUser('1', input)).rejects.toThrow(
+        UserAlreadyExistsError,
+      );
+      expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
+        'test@example.com',
+      );
+    });
+
+    it('should update the user if email is not used by another user', async () => {
+      usersRepositoryMock.findByEmail.mockResolvedValueOnce(null);
+      hashServiceMock.hashingPassword.mockResolvedValueOnce('hashedPassword');
+      configServiceMock.get.mockReturnValue(10);
+      usersRepositoryMock.update.mockResolvedValueOnce({
+        id: '1',
+        email: 'test@example.com',
+        password: 'hashedPassword',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      userMapperServiceMock.toOutput.mockReturnValue({
+        id: '1',
+        email: 'test@example.com',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      const input: UserInputDTO = {
+        email: 'test@example.com',
+        password: 'password123',
+        confirmPassword: 'password123',
+      };
+
+      const result = await service.updateUser('1', input);
+
+      expect(result).toEqual({
+        id: '1',
+        email: 'test@example.com',
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      });
+      expect(validatorServiceMock.validateUserInput).toHaveBeenCalledWith(
+        input,
+      );
+      expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
+        'test@example.com',
+      );
+      expect(hashServiceMock.hashingPassword).toHaveBeenCalledWith(
+        'password123',
+        10,
+      );
+      expect(usersRepositoryMock.update).toHaveBeenCalledWith('1', {
         email: 'test@example.com',
         password: 'hashedPassword',
       });
