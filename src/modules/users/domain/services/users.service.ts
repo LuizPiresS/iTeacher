@@ -9,22 +9,28 @@ import { UserAlreadyExistsError } from '../../../../common/errors/types/user-alr
 import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
 import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
 import { UserUpdateInputDto } from '../../http/dtos/user.update.input.dto';
+import {
+  HashServiceToken,
+  UserMapperServiceToken,
+  UsersRepositoryToken,
+  ValidatorServiceToken,
+} from '../tokens/inject-tokens';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('IUsersRepository')
+    @Inject(UsersRepositoryToken)
     private readonly usersRepository: IUsersRepository,
 
-    @Inject('IHashService')
+    @Inject(HashServiceToken)
     private readonly hashService: IHashingService,
 
     private readonly configService: ConfigService,
 
-    @Inject('IValidatorService')
+    @Inject(ValidatorServiceToken)
     private readonly validatorService: IValidatorService,
 
-    @Inject('IUserMapperService')
+    @Inject(UserMapperServiceToken)
     private readonly userMapperService: IUserMapperService,
   ) {}
 

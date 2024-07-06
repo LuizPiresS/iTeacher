@@ -7,16 +7,22 @@ import { HashingService } from '../../common/hashing/domain/services/hashing.ser
 import { UserMapperService } from './domain/services/user-mapper.service';
 import { ValidatorService } from './domain/services/validator.service';
 import { HashingModule } from '../../common/hashing/hashing.module';
+import {
+  HashServiceToken,
+  UsersRepositoryToken,
+  ValidatorServiceToken,
+  UserMapperServiceToken,
+} from './domain/tokens/inject-tokens';
 
 @Module({
   imports: [HashingModule],
   providers: [
     PrismaClient,
     UsersService,
-    { provide: 'IUsersRepository', useClass: UsersRepository },
-    { provide: 'IHashService', useClass: HashingService },
-    { provide: 'IUserMapperService', useClass: UserMapperService },
-    { provide: 'IValidatorService', useClass: ValidatorService },
+    { provide: UsersRepositoryToken, useClass: UsersRepository },
+    { provide: HashServiceToken, useClass: HashingService },
+    { provide: UserMapperServiceToken, useClass: UserMapperService },
+    { provide: ValidatorServiceToken, useClass: ValidatorService },
   ],
   controllers: [UsersController],
 })

@@ -5,6 +5,12 @@ import { UserAlreadyExistsError } from '../../../../common/errors/types/user-alr
 import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
 import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
 import { UserUpdateInputDto } from '../../http/dtos/user.update.input.dto';
+import {
+  HashServiceToken,
+  UserMapperServiceToken,
+  UsersRepositoryToken,
+  ValidatorServiceToken,
+} from '../tokens/inject-tokens';
 
 const mockUser = {
   id: '1',
@@ -64,11 +70,11 @@ describe('UsersService', () => {
       providers: [
         UsersService,
         {
-          provide: 'IUsersRepository',
+          provide: UsersRepositoryToken,
           useValue: usersRepositoryMock,
         },
         {
-          provide: 'IHashService',
+          provide: HashServiceToken,
           useValue: hashServiceMock,
         },
         {
@@ -76,11 +82,11 @@ describe('UsersService', () => {
           useValue: configServiceMock,
         },
         {
-          provide: 'IValidatorService',
+          provide: ValidatorServiceToken,
           useValue: validatorServiceMock,
         },
         {
-          provide: 'IUserMapperService',
+          provide: UserMapperServiceToken,
           useValue: userMapperServiceMock,
         },
       ],
