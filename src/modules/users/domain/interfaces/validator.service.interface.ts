@@ -1,5 +1,5 @@
-import { UserInputDTO } from '../../http/dtos/user.input.dto';
+import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
 
 export interface IValidatorService {
-  validateUserInput(input: UserInputDTO): void;
+  validateUserInput(input: UserCreateInputDto): void;
 }

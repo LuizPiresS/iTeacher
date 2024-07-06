@@ -22,6 +22,7 @@ describe('UserMapperService', () => {
     it('should map User to UserOutputDTO', () => {
       const user: User = {
         id: '1',
+        isDeleted: false,
         email: 'test@example.com',
         password: 'hashedPassword',
         createdAt: new Date('2023-01-01T00:00:00.000Z'),

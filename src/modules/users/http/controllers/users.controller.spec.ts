@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from '../../domain/services/users.service';
-import { UserInputDTO } from '../dtos/user.input.dto';
+import { UserCreateInputDto } from '../dtos/user.create.input.dto';
 import { UserAlreadyExistsError } from '../../../../common/errors/types/user-already-existis.error';
 
 const usersServiceMock = {
@@ -33,7 +33,7 @@ describe('UsersController', () => {
 
   describe('createUser', () => {
     it('should create a new user', async () => {
-      const input: UserInputDTO = {
+      const input: UserCreateInputDto = {
         email: 'test@example.com',
         password: 'P4$sword',
         confirmPassword: 'P4$sword',
@@ -54,7 +54,7 @@ describe('UsersController', () => {
     });
 
     it('should throw an error if user already exists', async () => {
-      const input: UserInputDTO = {
+      const input: UserCreateInputDto = {
         email: 'test@example.com',
         password: 'P4$sword',
         confirmPassword: 'P4$sword',
@@ -73,7 +73,7 @@ describe('UsersController', () => {
 
   describe('updateUser', () => {
     it('should update an existing user', async () => {
-      const input: UserInputDTO = {
+      const input: UserCreateInputDto = {
         email: 'updated@example.com',
         password: 'NewP4$sword',
         confirmPassword: 'NewP4$sword',
@@ -94,7 +94,7 @@ describe('UsersController', () => {
     });
 
     it('should throw an error if user already exists', async () => {
-      const input: UserInputDTO = {
+      const input: UserCreateInputDto = {
         email: 'test@example.com',
         password: 'P4$sword',
         confirmPassword: 'P4$sword',

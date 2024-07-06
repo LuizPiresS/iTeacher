@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsStrongPassword } from 'class-validator';
 import { Match } from '../decorators/match.decorator';
 
-export class UserInputDTO {
+export class UserCreateInputDto {
   @ApiProperty({
     description: 'User email that will be used to login',
     example: 'random@random.com',

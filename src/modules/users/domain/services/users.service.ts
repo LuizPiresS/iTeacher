@@ -4,10 +4,11 @@ import { IHashingService } from '../../../../common/hashing/domain/services/inte
 import { ConfigService } from '@nestjs/config';
 import { IValidatorService } from '../interfaces/validator.service.interface';
 import { IUserMapperService } from '../interfaces/user-mapper.service.interface';
-import { UserInputDTO } from '../../http/dtos/user.input.dto';
 import { UserOutputDTO } from '../../http/dtos/user.output.dto';
 import { UserAlreadyExistsError } from '../../../../common/errors/types/user-already-existis.error';
 import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
+import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
+import { UserUpdateInputDto } from '../../http/dtos/user.update.input.dto';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +28,7 @@ export class UsersService {
     private readonly userMapperService: IUserMapperService,
   ) {}
 
-  public async createUser(input: UserInputDTO): Promise<UserOutputDTO> {
+  public async createUser(input: UserCreateInputDto): Promise<UserOutputDTO> {
     this.validatorService.validateUserInput(input);
 
     const existentUser = await this.usersRepository.findByEmail(input.email);
@@ -55,14 +56,12 @@ export class UsersService {
 
   public async updateUser(
     userId: string,
-    input: UserInputDTO,
+    input: UserUpdateInputDto,
   ): Promise<UserOutputDTO> {
     const user = await this.usersRepository.findById(userId);
     if (user.isDeleted) {
       throw new UserDeletedException();
     }
-
-    this.validatorService.validateUserInput(input);
 
     const existentUser = await this.usersRepository.findByEmail(input.email);
     if (existentUser && existentUser.id !== userId) {

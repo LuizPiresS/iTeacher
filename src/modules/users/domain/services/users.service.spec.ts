@@ -3,7 +3,35 @@ import { UsersService } from './users.service';
 import { ConfigService } from '@nestjs/config';
 import { UserAlreadyExistsError } from '../../../../common/errors/types/user-already-existis.error';
 import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
-import { UserInputDTO } from '../../http/dtos/user.input.dto';
+import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
+import { UserUpdateInputDto } from '../../http/dtos/user.update.input.dto';
+
+const mockUser = {
+  id: '1',
+  email: 'test@example.com',
+  password: 'hashedPassword',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isDeleted: false,
+};
+
+const mockDeletedUser = {
+  ...mockUser,
+  email: 'deleted_user_1@example.com',
+  password: '',
+  isDeleted: true,
+};
+
+const createInput: UserCreateInputDto = {
+  email: 'test@example.com',
+  password: 'password123',
+  confirmPassword: 'password123',
+};
+
+const updateInput: UserUpdateInputDto = {
+  email: 'test@example.com',
+  password: 'password123',
+};
 
 const usersRepositoryMock = {
   findByEmail: jest.fn(),
@@ -67,23 +95,13 @@ describe('UsersService', () => {
 
   describe('createUser', () => {
     it('should throw UserAlreadyExistsError if user already exists', async () => {
-      usersRepositoryMock.findByEmail.mockResolvedValueOnce({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-      });
+      usersRepositoryMock.findByEmail.mockResolvedValueOnce(mockUser);
 
-      const input: UserInputDTO = {
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'password123',
-      };
-
-      await expect(service.createUser(input)).rejects.toThrow(
+      await expect(service.createUser(createInput)).rejects.toThrow(
         UserAlreadyExistsError,
       );
       expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
-        'test@example.com',
+        createInput.email,
       );
     });
 
@@ -91,13 +109,7 @@ describe('UsersService', () => {
       usersRepositoryMock.findByEmail.mockResolvedValueOnce(null);
       hashServiceMock.hashingPassword.mockResolvedValueOnce('hashedPassword');
       configServiceMock.get.mockReturnValue(10);
-      usersRepositoryMock.create.mockResolvedValueOnce({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+      usersRepositoryMock.create.mockResolvedValueOnce(mockUser);
       userMapperServiceMock.toOutput.mockReturnValue({
         id: '1',
         email: 'test@example.com',
@@ -105,13 +117,7 @@ describe('UsersService', () => {
         updatedAt: new Date(),
       });
 
-      const input: UserInputDTO = {
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'password123',
-      };
-
-      const result = await service.createUser(input);
+      const result = await service.createUser(createInput);
 
       expect(result).toEqual({
         id: '1',
@@ -120,149 +126,104 @@ describe('UsersService', () => {
         updatedAt: expect.any(Date),
       });
       expect(validatorServiceMock.validateUserInput).toHaveBeenCalledWith(
-        input,
+        createInput,
       );
       expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
-        'test@example.com',
+        createInput.email,
       );
       expect(hashServiceMock.hashingPassword).toHaveBeenCalledWith(
-        'password123',
+        createInput.password,
         10,
       );
       expect(usersRepositoryMock.create).toHaveBeenCalledWith({
-        email: 'test@example.com',
+        email: createInput.email,
         password: 'hashedPassword',
       });
-      expect(userMapperServiceMock.toOutput).toHaveBeenCalledWith({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
-      });
+      expect(userMapperServiceMock.toOutput).toHaveBeenCalledWith(mockUser);
     });
   });
 
   describe('updateUser', () => {
     it('should throw UserDeletedException if user is deleted', async () => {
-      usersRepositoryMock.findById.mockResolvedValueOnce({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        isDeleted: true,
-      });
+      usersRepositoryMock.findById.mockResolvedValueOnce(mockDeletedUser);
 
-      const input: UserInputDTO = {
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'password123',
-      };
-
-      await expect(service.updateUser('1', input)).rejects.toThrow(
+      await expect(service.updateUser('1', updateInput)).rejects.toThrow(
         UserDeletedException,
       );
       expect(usersRepositoryMock.findById).toHaveBeenCalledWith('1');
     });
 
     it('should throw UserAlreadyExistsError if email is already used by another user', async () => {
-      usersRepositoryMock.findById.mockResolvedValueOnce({
-        id: '1',
-        email: 'old@example.com',
-        password: 'hashedPassword',
-        isDeleted: false,
-      });
+      usersRepositoryMock.findById.mockResolvedValueOnce(mockUser);
       usersRepositoryMock.findByEmail.mockResolvedValueOnce({
+        ...mockUser,
         id: '2',
-        email: 'test@example.com',
-        password: 'hashedPassword',
       });
 
-      const input: UserInputDTO = {
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'password123',
-      };
-
-      await expect(service.updateUser('1', input)).rejects.toThrow(
+      await expect(service.updateUser('1', updateInput)).rejects.toThrow(
         UserAlreadyExistsError,
       );
       expect(usersRepositoryMock.findById).toHaveBeenCalledWith('1');
       expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
-        'test@example.com',
+        updateInput.email,
       );
     });
 
     it('should update the user if email is not used by another user', async () => {
-      usersRepositoryMock.findById.mockResolvedValueOnce({
-        id: '1',
-        email: 'old@example.com',
-        password: 'hashedPassword',
-        isDeleted: false,
-      });
+      usersRepositoryMock.findById.mockResolvedValueOnce(mockUser);
       usersRepositoryMock.findByEmail.mockResolvedValueOnce(null);
       hashServiceMock.hashingPassword.mockResolvedValueOnce('hashedPassword');
       configServiceMock.get.mockReturnValue(10);
       usersRepositoryMock.update.mockResolvedValueOnce({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...mockUser,
+        email: updateInput.email,
       });
       userMapperServiceMock.toOutput.mockReturnValue({
         id: '1',
         email: 'test@example.com',
+        isDeleted: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
 
-      const input: UserInputDTO = {
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'password123',
-      };
-
-      const result = await service.updateUser('1', input);
+      const result = await service.updateUser('1', updateInput);
 
       expect(result).toEqual({
         id: '1',
         email: 'test@example.com',
+        isDeleted: false,
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
       });
-      expect(validatorServiceMock.validateUserInput).toHaveBeenCalledWith(
-        input,
-      );
+
       expect(usersRepositoryMock.findById).toHaveBeenCalledWith('1');
       expect(usersRepositoryMock.findByEmail).toHaveBeenCalledWith(
-        'test@example.com',
+        updateInput.email,
       );
       expect(hashServiceMock.hashingPassword).toHaveBeenCalledWith(
-        'password123',
+        updateInput.password,
         10,
       );
       expect(usersRepositoryMock.update).toHaveBeenCalledWith('1', {
-        email: 'test@example.com',
+        email: updateInput.email,
         password: 'hashedPassword',
       });
-      expect(userMapperServiceMock.toOutput).toHaveBeenCalledWith({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
-      });
+      expect(userMapperServiceMock.toOutput).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: '1',
+          email: updateInput.email,
+          password: 'hashedPassword',
+          isDeleted: false,
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
+        }),
+      );
     });
   });
 
   describe('anonymizeUser', () => {
     it('should throw UserDeletedException if user is already deleted', async () => {
-      usersRepositoryMock.findById.mockResolvedValueOnce({
-        id: '1',
-        email: 'deleted_user_1@example.com',
-        password: '',
-        isDeleted: true,
-      });
+      usersRepositoryMock.findById.mockResolvedValueOnce(mockDeletedUser);
 
       await expect(service.anonymizeUser('1')).rejects.toThrow(
         UserDeletedException,
@@ -271,26 +232,14 @@ describe('UsersService', () => {
     });
 
     it('should anonymize a user', async () => {
-      usersRepositoryMock.findById.mockResolvedValueOnce({
-        id: '1',
-        email: 'test@example.com',
-        password: 'hashedPassword',
-        isDeleted: false,
-      });
-      usersRepositoryMock.update.mockResolvedValueOnce({
-        id: '1',
-        email: 'deleted_user_1@example.com',
-        password: '',
-        isDeleted: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+      usersRepositoryMock.findById.mockResolvedValueOnce(mockUser);
+      usersRepositoryMock.update.mockResolvedValueOnce(mockDeletedUser);
 
       await service.anonymizeUser('1');
 
       expect(usersRepositoryMock.findById).toHaveBeenCalledWith('1');
       expect(usersRepositoryMock.update).toHaveBeenCalledWith('1', {
-        email: 'deleted_user_1@example.com',
+        email: `deleted_user_1@example.com`,
         password: '',
         isDeleted: true,
       });
