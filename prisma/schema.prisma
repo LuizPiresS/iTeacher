@@ -15,6 +15,20 @@ model User {
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  profile   Profile?
 
   @@map("users")
+}
+
+model Profile {
+  id           String @id @default(uuid())
+  name         String
+  cellPhone    String
+  street       String
+  number       String
+  neighborhood String
+  userId       String @unique
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profile")
 }

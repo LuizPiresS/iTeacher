@@ -7,10 +7,12 @@ import { validate } from './common/config/env.validation';
 import AppConfig from './common/config/app.config';
 import MailConfig from './common/config/mail.config';
 import SwaggerConfig from './common/config/swagger.config';
+import { ProfileModule } from './modules/profiles/profile.module';
 
 @Module({
   imports: [
     UsersModule,
+    ProfileModule,
     HashingModule,
     ConfigModule.forRoot({
       validate,
