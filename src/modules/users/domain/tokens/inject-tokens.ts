@@ -1,4 +1,4 @@
-export const UsersRepositoryToken = Symbol('IUsersRepository');
-export const HashServiceToken = Symbol('IHashService');
-export const UserMapperServiceToken = Symbol('IUserMapperService');
-export const ValidatorServiceToken = Symbol('IValidatorService');
+export const UsersRepositoryToken = Symbol('UsersRepository');
+export const HashServiceToken = Symbol('HashService');
+export const UserMapperServiceToken = Symbol('UserMapperService');
+export const ValidatorServiceToken = Symbol('ValidatorService');
