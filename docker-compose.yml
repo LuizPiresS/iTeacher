@@ -14,6 +14,7 @@ services:
     depends_on:
       - db
       - redis
+      - localstack
     networks:
       - app-network
 
@@ -42,6 +43,24 @@ services:
       - .:/home/node/app
     networks:
       - app-network
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: ${CONTAINER_NAME}-localstack
+    ports:
+      - '4566:4566'  # Porta principal do LocalStack para todos os serviços
+      - '4571:4571'  # Porta adicional para alguns serviços
+    environment:
+      - SERVICES=s3,sns  # Lista de serviços que você deseja emular
+      - DEBUG=1  # Ativar logs de depuração para ajudar na resolução de problemas
+      - DATA_DIR=/var/lib/localstack  # Diretório para armazenar dados persistentes entre reinicializações
+    volumes:
+      - 'localstack_data:/var/lib/localstack'  # Montagem do diretório local para persistência de dados
+    networks:
+      - app-network
+
+volumes:
+  localstack_data:
 
 networks:
   app-network:
