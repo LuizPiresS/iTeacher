@@ -13,7 +13,7 @@ export class ProfileService {
   public async createProfile(
     input: ProfileInputDTO,
   ): Promise<ProfileOutputDTO> {
-    const existingProfile = this.profileRepository.findById(input.userId);
+    const existingProfile = await this.profileRepository.findById(input.userId);
     if (existingProfile) {
       return;
     }
@@ -24,20 +24,24 @@ export class ProfileService {
       street: input.address.street,
       number: input.address.number,
       neighborhood: input.address.neighborhood,
+      photoUrl: input.photoUrl,
     });
 
     return this.toOutput(newProfile);
   }
 
   private toOutput(profile: any): ProfileOutputDTO {
+    console.log(profile);
+
     return {
       id: profile.id,
       name: profile.name,
       cellPhone: profile.cellPhone,
+      photoUrl: profile.photoUrl,
       address: {
-        street: profile.address.street,
-        number: profile.address.number,
-        neighborhood: profile.address.neighborhood,
+        street: profile.street,
+        number: profile.number,
+        neighborhood: profile.neighborhood,
       },
     };
   }

@@ -21,14 +21,15 @@ model User {
 }
 
 model Profile {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   name         String
   cellPhone    String
+  photoUrl     String?
   street       String
   number       String
   neighborhood String
-  userId       String @unique
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("profile")
 }

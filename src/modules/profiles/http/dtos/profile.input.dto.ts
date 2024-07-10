@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, ValidateNested } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  ValidateNested,
+  IsOptional,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 class AddressDTO {
@@ -34,6 +39,14 @@ export class ProfileInputDTO {
   @IsString()
   @IsNotEmpty()
   cellPhone: string;
+
+  @ApiProperty({
+    example:
+      'http://localhost/photo/a514b0ec-0cd5-4709-a059-e67c30f907e5/photo.jpg',
+  })
+  @IsString()
+  @IsOptional()
+  photoUrl?: string;
 
   @ApiProperty({ type: AddressDTO })
   @ValidateNested()

@@ -15,6 +15,9 @@ export class ProfileOutputDTO {
   @ApiProperty({ example: 'randomId' })
   id: string;
 
+  @ApiProperty({ example: 'randomId' })
+  photoUrl?: string;
+
   @ApiProperty({ example: 'Random Name' })
   name: string;
 
