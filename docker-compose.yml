@@ -51,7 +51,7 @@ services:
       - '4566:4566'  # Porta principal do LocalStack para todos os serviços
       - '4571:4571'  # Porta adicional para alguns serviços
     environment:
-      - SERVICES=s3,sns  # Lista de serviços que você deseja emular
+      - SERVICES=s3,sns, location  # Lista de serviços que você deseja emular
       - DEBUG=1  # Ativar logs de depuração para ajudar na resolução de problemas
       - DATA_DIR=/var/lib/localstack  # Diretório para armazenar dados persistentes entre reinicializações
     volumes:

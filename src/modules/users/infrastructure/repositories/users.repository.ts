@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
-import { IUsersRepository } from '../interfaces/users.repository.interface';
+import { IUsersRepository } from '../../domain/interfaces/users.repository.interface';
 import { BaseRepository } from '../../../../common/base-repository/base-repository';
+import { UserEntity } from '../entities/user.entity';
 
 @Injectable()
 export class UsersRepository
-  extends BaseRepository<User>
+  extends BaseRepository<UserEntity>
   implements IUsersRepository
 {
   protected getModelName(): string {

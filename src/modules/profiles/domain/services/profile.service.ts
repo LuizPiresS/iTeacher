@@ -1,13 +1,18 @@
-import { Injectable, Inject } from '@nestjs/common';
+// src/profile/profile.service.ts
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { IProfileRepository } from '../interfaces/profile.repository.interface';
 import { ProfileOutputDTO } from '../../http/dtos/profile.output.dto';
 import { ProfileInputDTO } from '../../http/dtos/profile.input.dto';
+import { GeocodingService } from '../../../../common/geocoding/domain/services/geocoding.service';
 
 @Injectable()
 export class ProfileService {
+  private readonly logger = new Logger(ProfileService.name);
+
   constructor(
     @Inject('IProfileRepository')
     private readonly profileRepository: IProfileRepository,
+    private readonly geocodingService: GeocodingService,
   ) {}
 
   public async createProfile(
@@ -17,6 +22,10 @@ export class ProfileService {
     if (existingProfile) {
       return;
     }
+
+    const address = `${input.address.street}, ${input.address.number}, ${input.address.neighborhood}`;
+    const { lat, lng } = await this.geocodingService.getCoordinates(address);
+
     const newProfile = await this.profileRepository.create({
       name: input.name,
       cellPhone: input.cellPhone,
@@ -25,14 +34,14 @@ export class ProfileService {
       number: input.address.number,
       neighborhood: input.address.neighborhood,
       photoUrl: input.photoUrl,
+      latitude: lat,
+      longitude: lng,
     });
 
     return this.toOutput(newProfile);
   }
 
   private toOutput(profile: any): ProfileOutputDTO {
-    console.log(profile);
-
     return {
       id: profile.id,
       name: profile.name,

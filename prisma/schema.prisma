@@ -28,6 +28,8 @@ model Profile {
   street       String
   number       String
   neighborhood String
+  latitude     Float?
+  longitude    Float?
   userId       String  @unique
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 

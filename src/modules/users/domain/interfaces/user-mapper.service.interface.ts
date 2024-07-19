@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { UserOutputDTO } from '../../http/dtos/user.output.dto';
+import { UserOutputDTO } from '../../application/dto/user.output.dto';
 
 export interface IUserMapperService {
   toOutput(user: User): UserOutputDTO;

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { UserOutputDTO } from '../../http/dtos/user.output.dto';
-import { IUserMapperService } from '../interfaces/user-mapper.service.interface';
+import { UserOutputDTO } from '../../application/dto/user.output.dto';
+import { IUserMapperService } from '../../domain/interfaces/user-mapper.service.interface';
 
 @Injectable()
 export class UserMapperService implements IUserMapperService {

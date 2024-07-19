@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserCreateInputDto } from '../../http/dtos/user.create.input.dto';
-import { IValidatorService } from '../interfaces/validator.service.interface';
+import { UserCreateInputDto } from '../../application/dto/user.create.input.dto';
+import { IValidatorService } from '../../domain/interfaces/validator.service.interface';
 
 @Injectable()
 export class ValidatorService implements IValidatorService {
