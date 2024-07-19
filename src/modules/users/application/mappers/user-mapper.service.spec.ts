@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserMapperService } from './user-mapper.service';
 import { User } from '@prisma/client';
-import { UserOutputDTO } from '../../application/dto/user.output.dto';
+import { UserOutputDTO } from '../../presentation/dtos/user.output.dto';
 
 describe('UserMapperService', () => {
   let service: UserMapperService;

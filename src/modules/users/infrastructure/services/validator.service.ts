@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserCreateInputDto } from '../../application/dto/user.create.input.dto';
+import { UserCreateInputDto } from '../../presentation/dtos/user.create.input.dto';
 import { IValidatorService } from '../../domain/interfaces/validator.service.interface';
 
 @Injectable()

@@ -3,11 +3,11 @@ import { CreateUserUseCase } from './application/use-cases/create-user.use-case'
 import { UpdateUserUseCase } from './application/use-cases/update-user.use-case';
 import { AnonymizeUserUseCase } from './application/use-cases/anonymize-user.use-case';
 import { UsersService } from './infrastructure/services/users.service';
-import { UserController } from './infrastructure/controllers/users.controller';
+import { UserController } from './presentation/controllers/users.controller';
 import { HashingService } from '../../common/hashing/domain/services/hashing.service';
 import { UsersRepository } from './infrastructure/repositories/users.repository';
 import { ValidatorService } from './infrastructure/services/validator.service';
-import { UserMapperService } from './infrastructure/mappers/user-mapper.service';
+import { UserMapperService } from './application/mappers/user-mapper.service';
 import {
   AnonymizeUserUseCaseToken,
   CreateUserUseCaseToken,

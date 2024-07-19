@@ -10,8 +10,8 @@ import {
   UserMapperServiceToken,
   UsersRepositoryToken,
 } from '../../domain/tokens/inject-tokens';
-import { UserUpdateInputDto } from '../dto/user.update.input.dto';
-import { UserOutputDTO } from '../dto/user.output.dto';
+import { UserUpdateInputDto } from '../../presentation/dtos/user.update.input.dto';
+import { UserOutputDTO } from '../../presentation/dtos/user.output.dto';
 
 // Definindo interfaces específicas para este use case
 export interface IUpdateUserUseCase {

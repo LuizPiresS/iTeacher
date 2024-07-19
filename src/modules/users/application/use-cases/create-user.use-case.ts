@@ -11,8 +11,8 @@ import {
   UsersRepositoryToken,
   ValidatorServiceToken,
 } from '../../domain/tokens/inject-tokens';
-import { UserCreateInputDto } from '../dto/user.create.input.dto';
-import { UserOutputDTO } from '../dto/user.output.dto';
+import { UserCreateInputDto } from '../../presentation/dtos/user.create.input.dto';
+import { UserOutputDTO } from '../../presentation/dtos/user.output.dto';
 
 // Definindo interfaces específicas para este use case
 export interface ICreateUserUseCase {

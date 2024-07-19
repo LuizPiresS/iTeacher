@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidatorService } from './validator.service';
-import { UserCreateInputDto } from '../../application/dto/user.create.input.dto';
+import { UserCreateInputDto } from '../../presentation/dtos/user.create.input.dto';
 
 describe('ValidatorService', () => {
   let service: ValidatorService;

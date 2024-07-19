@@ -1,9 +1,9 @@
 import { Controller, Post, Put, Body, Param, Inject } from '@nestjs/common';
 import { ICreateUserUseCase } from '../../application/use-cases/create-user.use-case';
 import { IUpdateUserUseCase } from '../../application/use-cases/update-user.use-case';
-import { UserCreateInputDto } from '../../application/dto/user.create.input.dto';
-import { UserOutputDTO } from '../../application/dto/user.output.dto';
-import { UserUpdateInputDto } from '../../application/dto/user.update.input.dto';
+import { UserCreateInputDto } from '../dtos/user.create.input.dto';
+import { UserOutputDTO } from '../dtos/user.output.dto';
+import { UserUpdateInputDto } from '../dtos/user.update.input.dto';
 import {
   AnonymizeUserUseCaseToken,
   CreateUserUseCaseToken,
