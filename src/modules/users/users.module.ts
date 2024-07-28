@@ -16,7 +16,7 @@ import {
   UserMapperServiceToken,
   UsersRepositoryToken,
   ValidatorServiceToken,
-} from './domain/tokens/inject-tokens';
+} from '../../common/inject-tokens/users.tokens';
 import { HashingModule } from '../../common/hashing/hashing.module';
 import { PrismaClient } from '@prisma/client';
 

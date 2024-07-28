@@ -10,11 +10,10 @@ import {
   UserMapperServiceToken,
   UsersRepositoryToken,
   ValidatorServiceToken,
-} from '../../domain/tokens/inject-tokens';
+} from '../../../../common/inject-tokens/users.tokens';
 import { UserCreateInputDto } from '../../presentation/dtos/user.create.input.dto';
 import { UserOutputDTO } from '../../presentation/dtos/user.output.dto';
 
-// Definindo interfaces específicas para este use case
 export interface ICreateUserUseCase {
   execute(input: UserCreateInputDto): Promise<UserOutputDTO>;
 }

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IUsersRepository } from '../../domain/interfaces/users.repository.interface';
 import { UserDeletedException } from '../../../../common/errors/exceptions/user-deleted.exception';
-import { UsersRepositoryToken } from '../../domain/tokens/inject-tokens';
+import { UsersRepositoryToken } from '../../../../common/inject-tokens/users.tokens';
 
 // Definindo interfaces específicas para este use case
 export interface IAnonymizeUserUseCase {

@@ -8,7 +8,7 @@ import {
   AnonymizeUserUseCaseToken,
   CreateUserUseCaseToken,
   UpdateUserUseCaseToken,
-} from '../../domain/tokens/inject-tokens';
+} from '../../../../common/inject-tokens/users.tokens';
 import { IAnonymizeUserUseCase } from '../../application/use-cases/anonymize-user.use-case';
 
 @Controller('users')

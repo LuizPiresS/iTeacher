@@ -9,7 +9,7 @@ import {
   HashServiceToken,
   UserMapperServiceToken,
   UsersRepositoryToken,
-} from '../../domain/tokens/inject-tokens';
+} from '../../../../common/inject-tokens/users.tokens';
 import { UserUpdateInputDto } from '../../presentation/dtos/user.update.input.dto';
 import { UserOutputDTO } from '../../presentation/dtos/user.output.dto';
 
